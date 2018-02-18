@@ -1,2 +1,2 @@
-# timebomb-web-client
+# timesup-web-client
 💣 Task and reminder management
