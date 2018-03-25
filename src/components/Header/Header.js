@@ -7,8 +7,8 @@ class Header extends Component {
         return (
             <nav>
                 <div className="nav-wrapper">
-                    <Link to="/" className="brand-logo left">
-                        Home
+                    <Link to="/" className="brand-logo center">
+                        Time's Up
                     </Link>
                 </div>
             </nav>
