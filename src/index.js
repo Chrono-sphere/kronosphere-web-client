@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from 'react-apollo';
 import { HashRouter } from 'react-router-dom';
 
-import App from './components/App';
+import App from 'Components/App';
 
 const link = createHttpLink({
   uri: 'http://localhost:4000/graphql',

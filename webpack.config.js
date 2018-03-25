@@ -8,6 +8,13 @@ module.exports = {
         'webpack-dev-server/client?http://0.0.0.0:8080',
         './src/index.js'
     ],
+    resolve: {
+        modules: [path.resolve(__dirname), "node_modules"],
+        alias: {
+            Components: 'src/components/',
+        },
+        extensions: ['*', '.js', '.jsx']
+    },
     output: {
         path: path.resolve(__dirname, 'build'),
         publicPath: '/',
