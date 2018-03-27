@@ -1,0 +1,47 @@
+.count-metric {
+    height: auto;
+    width: auto;
+    display: inline-block;
+    padding: 10px;
+}
+
+.count-metric-value {
+    font-size: 36px;
+    color: #eee;
+    font-weight: 600;
+    height: auto;
+    width: auto;
+    margin-top: -10px;
+}
+
+.count-metric-title {
+    font-size: 16px;
+    color: #eee;
+    padding: 0px 2.5px 0px 2.5px;
+}
+
+.count-metric-bubble-container {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 2.5px 0px 2.5px;
+}
+
+.count-metric-bubble {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+}
+
+.count-metric-row1 {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.count-metric-row2 {
+    display: flex;
+    height: auto;
+}

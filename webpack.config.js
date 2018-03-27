@@ -1,12 +1,20 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: [
         'webpack-dev-server/client?http://0.0.0.0:8080',
         './src/index.js'
     ],
+    resolve: {
+        modules: [path.resolve(__dirname), "node_modules"],
+        alias: {
+            Components: 'src/components/',
+        },
+        extensions: ['*', '.js', '.jsx']
+    },
     output: {
         path: path.resolve(__dirname, 'build'),
         publicPath: '/',
@@ -18,12 +26,20 @@ module.exports = {
                 use: 'babel-loader',
                 test: /\.js$/,
                 exclude: /node_modules/
+            },
+            {
+                use: ExtractTextPlugin.extract({
+                    use: 'css-loader',
+                    fallback: "style-loader"
+                }),
+                test: /\.css$/
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
-        })
+        }),
+        new ExtractTextPlugin('style.css')
     ]
 }
