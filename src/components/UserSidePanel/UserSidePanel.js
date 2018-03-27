@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UserCircleImage from 'Components/UserCircleImage/UserCircleImage';
+import CountMetric from 'Components/CountMetric/CountMetric';
 
 import './UserSidePanel.css';
 
@@ -28,6 +29,17 @@ class UserSidePanel extends Component {
                     </div>
                     <div class="user-name">
                         { this.userName }
+                    </div>
+                </div>
+                
+                <div className="recent-activity">
+                    <div className="recent-activity-header">
+                        This week
+                    </div>
+                    <hr />
+                    <div className="recent-activity-metrics">
+                        <CountMetric title="Active" value="12" backgroundColor="green"/>
+                        <CountMetric title="Complete" value="25" backgroundColor="yellow"/>
                     </div>
                 </div>
             </div>
