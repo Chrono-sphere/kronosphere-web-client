@@ -10,21 +10,30 @@ class TaskCard extends Component {
     }
 
     onResize() {
+        console.log('In onResize()')
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
+
+        console.log('window.innerWidth: ', this.windowWidth);
+        console.log('window.innerHeigt: ', this.windowHeight);
     }
 
     bindEvents() {
-        this.card.addEventListener( 'mousedown', this.onMouseDown );
-    	window.addEventListener( 'mouseup', this.onMouseUp );
-    	window.addEventListener( 'mousemove', this.onMouseMove );
-    	window.addEventListener( 'resize', this.onResize );
+        this.card.addEventListener( 'mousedown', this.onMouseDown.bind(this) );
+    	window.addEventListener( 'mouseup', this.onMouseUp.bind(this) );
+    	window.addEventListener( 'mousemove', this.onMouseMove.bind(this) );
+    	window.addEventListener( 'resize', this.onResize.bind(this) );
     }
 
     onMouseDown(event) {
+        console.log('in onMouseDown()');
+
         this.isMouseDown = true;
         this.mouseX = event.pageX;
         this.mouseY = event.pageY;
+
+        console.log('mouseX: ', this.mouseX);
+        console.log('mouseY: ', this.mouseY);
 
         this.pinX = this.cardWidth / 2; // pin to center
 	    this.pinY = this.cardHeight / 2; // pin to center
@@ -45,13 +54,15 @@ class TaskCard extends Component {
             this.mouseX = event.pageX;
             this.mouseY = event.pageY;
         }
+
+        console.log('event x: ', event.pageX);
+        console.log('event y: ', event.pageY);
+        console.log('New mouse x: ', this.mouseX);
+        console.log('New mouse y: ', this.mouseY);
     }
 
     loop() {
-        if(this == null) {
-            return;
-        }
-        window.requestAnimationFrame( this.loop )
+        requestAnimationFrame( this.loop.bind(this) )
 
         // set new target position
         this.targetX = this.mouseX - this.cardX - this.pinX;
@@ -94,9 +105,17 @@ class TaskCard extends Component {
         this.scale += this.targetscale * 0.2;
 
         // apply the transform
-        this.card.style[ 'transform' ] = 'translate3d(' + this.cardX + 'px, ' + this.cardY + 'px, 0)';
-        //image.style[ 'transform-origin' ] = pinxperc + '% ' + pinyperc + '%';
-        //image.style[ 'transform' ] = 'scale(' + scale + ') rotateY(' + ry + 'deg) rotateX(' + rx + 'deg)';
+        //this.card.style[ 'transform' ] = 'translate3d(' + this.cardX + 'px, ' + this.cardY + 'px, 0)';
+        this.card.style[ 'transform-origin' ] = this.pinxperc + '% ' + this.pinyperc + '%';
+        this.card.style[ 'transform' ] = 'translate3d(' + this.cardX + 'px, ' + this.cardY + 'px, 0) scale(' + this.scale + ') rotateY(' + this.ry + 'deg) rotateX(' + this.rx + 'deg)';
+
+        this.majestyvoltarget = this.isMouseDown ? 0.2 : 0;
+        this.majestyvol += ( this.majestyvoltarget - this.majestyvol ) * 0.1;
+        this.majesty.volume = this.majestyvol;
+
+        this.whooshvoltarget = ( Math.abs( ( this.ocardY - this.cardY ) ) + Math.abs( ( this.ocardX - this.cardX ) ) ) * 0.003;
+        this.whooshvol += ( this.whooshvoltarget - this.whooshvol ) * 0.1;
+        this.whoosh.volume = Math.min( this.whooshvol, 1 );
 
         // store the old card position
         this.ocardX = this.cardX;
@@ -106,20 +125,39 @@ class TaskCard extends Component {
     render() {
         return (
             <div className="task-card">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-ragnaros.png" />
+                <div class="row">
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="https://picsum.photos/300/200" />
+                          <span class="card-title">Card Title</span>
+                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                        </div>
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                    </div>
+                  </div>
             </div>
         );
     }
 
     componentDidMount() {
+        console.log('In componentDidMount()');
+
         this.card = document.querySelector('.task-card');
-        this.cardWidth = this.card.width;
-        this.cardHeight = this.card.height;
+        this.cardWidth = this.card.clientWidth;
+        this.cardHeight = this.card.clientHeight;
         this.cardX = this.windowWidth / 2 - this.cardWidth / 2;
         this.cardY = this.windowHeight / 2 - this.cardHeight / 2;
 
+        console.log('card width: ', this.cardWidth);
+        console.log('card height: ', this.cardHeight);
+        console.log('cardX: ', this.cardX);
+        console.log('cardY: ', this.cardY);
+
+
         this.ocardX = this.cardX;
-        this.ocardy = this.cardY;
+        this.ocardY = this.cardY;
 
         this.pinX = 0;
         this.pinY = 0;
@@ -136,7 +174,33 @@ class TaskCard extends Component {
         this.isMouseDown = false;
         this.mouseX = this.cardX;
         this.mouseY = this.cardY;
+        this.audioLoaded = 0;
 
+        this.whooshvol = 0;
+    	this.whooshvoltarget = 0;
+    	this.whoosh = new Audio();
+    	//this.whoosh.addEventListener( 'canplaythrough', this.audioload );
+    	this.whoosh.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hs-whoosh.ogg';
+    	this.whoosh.volume = 0;
+    	this.whoosh.loop = true;
+
+    	this.majestyvol = 0;
+    	this.majestyvoltarget = 0;
+    	this.majesty = new Audio();
+    	//this.majesty.addEventListener( 'canplaythrough', this.audioload );
+    	this.majesty.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hs-majesty.ogg';
+    	this.majesty.volume = 0;
+    	this.majesty.loop = true;
+
+        this.audioLoad();
+    }
+
+    audioLoad() {
+
+        console.log('In audioLoad()');
+
+        this.majesty.play();
+        this.whoosh.play();
         this.bindEvents();
         this.loop();
     }
