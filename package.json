@@ -4,7 +4,7 @@
   "description": "💣 Task and reminder management",
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
     "dev": "npm run build && node ./build/bundle.js",
     "build": "webpack"
   },
@@ -40,7 +40,9 @@
   "devDependencies": {
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^7.0.1",
     "style-loader": "^0.20.3",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-dev-server": "^3.1.3"
   }
 }
