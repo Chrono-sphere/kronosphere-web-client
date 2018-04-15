@@ -1,17 +1,21 @@
 import React from 'react';
-import Header from './Header/Header';
-import UserSidePanel from './UserSidePanel/UserSidePanel';
+import { Route, Switch } from 'react-router-dom';
+
+import Dashboard from 'Components/Dashboard/Dashboard';
+import Login from 'Components/Login/Login';
+
+export const Routes = {
+    Root: '/',
+    Dashboard: '/dashboard',
+}
 
 const App = (props) => {
     return (
         <div className="container">
-            <Header />
-            <UserSidePanel
-                userCoverImage="http://lorempixel.com/500/400"
-                userProfileImage="http://static.businessinsider.com/image/595141eda3630f62588b5117-750.jpg"
-                userName="Richard Henricks"
-                />
-            { props.children }
+            <Switch>
+                <Route exact path="/" component={Login} />
+                <Route path="/dashboard" component={Dashboard} />
+            </Switch>
         </div>
     );
 }
