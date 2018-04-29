@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -11,7 +12,10 @@ module.exports = {
     resolve: {
         modules: [path.resolve(__dirname), "node_modules"],
         alias: {
-            Components: 'src/components/',
+            Components: path.resolve(__dirname, 'src/components/'),
+            Mutations: path.resolve(__dirname, 'src/mutations'),
+            Queries: path.resolve(__dirname, 'src/queries'),
+            Assets: path.resolve(__dirname, 'src/assets'),
         },
         extensions: ['*', '.js', '.jsx']
     },
@@ -33,10 +37,18 @@ module.exports = {
                     fallback: "style-loader"
                 }),
                 test: /\.css$/
+            },
+            {
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader', 'sass-loader'],
+                    fallback: 'style-loader'
+                }),
+                test: /\.scss$/
             }
         ]
     },
     plugins: [
+        new Dotenv(),
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),

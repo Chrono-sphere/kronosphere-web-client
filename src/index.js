@@ -9,7 +9,7 @@ import { HashRouter } from 'react-router-dom';
 import App from 'Components/App';
 
 const link = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: `${ process.env.GRAPHQL_ENDPOINT }/graphql`,
   credentials: 'include'
 });
 

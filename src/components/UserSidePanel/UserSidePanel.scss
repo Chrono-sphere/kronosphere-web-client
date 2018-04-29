@@ -71,3 +71,13 @@
     display: flex;
     justify-content: space-around;;
 }
+
+.logout-container {
+    .btn {
+        background-color: #A24C68;
+    }
+
+    .btn:hover {
+        background-color: #ca6787;
+    }
+}

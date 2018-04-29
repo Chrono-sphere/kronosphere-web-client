@@ -1,0 +1,23 @@
+.loginbox-container {
+    height: 240px;
+    width: 350px;
+    border-radius: 10%;
+    background: linear-gradient(to bottom, rgba(146, 135, 187, 0.6) 0%, rgba(0,0,0,0.2) 100%);
+    transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
+    transform: scale(1);
+
+    .loginbox-form {
+        color: white;        
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 2.5rem;
+
+        .btn-large {
+            background-color: #A24C68;
+        }
+
+        .btn-large:hover {
+            background-color: #ca6787;
+        }
+    }
+}
